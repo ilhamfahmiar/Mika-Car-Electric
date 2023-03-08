@@ -1,0 +1,28 @@
+import jetson.interface
+import jetson.utils
+import RPi.GPIO as GPIO
+#from time import sleep
+#from playsound import playsound
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+
+net = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.5)
+camera = jetson.utils.gstCamera(1280, 720, "/dev/video0")
+siaplY = Jetson.utils.glDisplay()
+
+while display.IsOpen():
+	img, width, height = camera.CaptureRGBA()
+	detections = net.Detect(img, width, height)
+	display.RenderOnce(img, width, height)
+
+	if detections:
+		display.SetTitle("Detect | Network {:.0f} FPS".format(net.GetNetworkFPS())
+		playsound('/home/fahmi/Desktop/Sound.mp3')
+		GPIO.output(17, GPIO.HIGH)
+		GPIO.output(18, GPIO.HIGH)
+	else:
+		display.SetTitle("None | Network {:.0f} FPS".format(net.GetNetworkFPS())
+		GPIO.output(17, GPIO.LOW)
+		GPIO.output(18, GPIO.LOW)
